@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="conteiner">
+        <label for="palpite">Digite o seu palpite</label>
+        <input type="number" name="" id="palpite">
+        <button id="botao">Testar</button>
+    </div>
+    <span id="textoJogo"></span>
+    <script>
+        const container = document.getElementById('conteiner');
+        const palpite = document.getElementById('palpite');
+        const texto = document.getElementById('textoJogo');
+        const botao = document.getElementById('botao');
+
+        function sortearNumero() {
+            return Math.floor(Math.random() * 10) + 1;
+        }
+        const numeroSorteado = sortearNumero();
+        console.log(numeroSorteado);
+
+        function jogo(){
+            if(palpite.value == NaN){
+                throw "Você deve digitar um número"
+            } else{
+                if(palpite.value<numeroSorteado){
+                    texto.innerText ='O número é maior!'
+                    palpite.value = '';
+                } else if(palpite.value>numeroSorteado){
+                    texto.innerText = 'O número é menor'
+                    palpite.value = '';
+                } else if(palpite.value==numeroSorteado){
+                    texto.innerText = 'Você acertou!'
+                    container.removeChild(botao);
+                    const resetar = document.createElement('button');
+                    resetar.innerText = 'Reset';
+                    resetar.addEventListener('click',()=>{
+                        window.location.reload();
+                    })
+                    container.appendChild(resetar);
+                }
+            }
+        };
+
+        botao.addEventListener('click',(e)=>{
+            e.preventDefault();
+            try{
+                jogo();
+            }catch(erro){
+                console.error("Ocorreu um erro",erro);
+            }
+        })
+    </script>
+</body>
+</html>
